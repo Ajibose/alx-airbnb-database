@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXIST User (
-    user_id INT PRIMARY KEY,
+    user_id CHAR(36) PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXIST User (
 )
 
 CREATE TABLE IF NOT EXIST Property (
-    property_id INT PRIMARY KEY,
-    host_id INT,
+    property_id CHAR(36) PRIMARY KEY,
+    host_id CHAR(36),
     name VARCHAR(125) NOT NULL,
     description TEXT NOT NULL,
     location VARCHAR(255) NOT NULL,
@@ -22,9 +22,9 @@ CREATE TABLE IF NOT EXIST Property (
 )
 
 CREATE TABLE IF NOT EXIST Booking (
-    booking_id INT PRIMARY KEY,
-    property_id INT,
-    user_id INT,
+    booking_id CHAR(36) PRIMARY KEY,
+    property_id CHAR(36),
+    user_id CHAR(36),
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     total_price DECIMAL NOT NULL,
@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXIST Booking (
 )
 
 CREATE TABLE IF NOT EXIST Payment (
-    payment_id INT PRIMARY KEY,
-    booking_id INT,
+    payment_id CHAR(36) PRIMARY KEY,
+    booking_id CHAR(36),
     amount DECIMAL NOT NULL,
     payment_date TIMESTAMP, DEFAULT CURRENT_TIMESTAMP,
     payment_method ENUM('credit_card', 'paypal', 'stripe') NOT NULL,
@@ -44,9 +44,9 @@ CREATE TABLE IF NOT EXIST Payment (
 )
 
 CREATE TABLE IF NOT EXIST Review (
-    review_id INT PRIMARY KEY,
-    property_id INT,
-    user_id INT,
+    review_id CHAR(36) PRIMARY KEY,
+    property_id CHAR(36),
+    user_id CHAR(36),
     rating INT  CHECK (rating >= 1 AND rating <= 5),
     comment TEXT NOT NULL,
     created_at TIMESTAMP, DEFAULT CURRENT_TIMESTAMP,
@@ -55,9 +55,9 @@ CREATE TABLE IF NOT EXIST Review (
 )
 
 CREATE TABLE IF NOT EXIST Message (
-    message_id INT PRIMARY KEY,
-    sender_id INT,
-    recipient_id INT,
+    message_id CHAR(36) PRIMARY KEY,
+    sender_id CHAR(36),
+    recipient_id CHAR(36),
     message_body TEXT NOT NULL,
     sent_at TIMESTAMP, DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (sender_id) REFERENCES User(user_id),
